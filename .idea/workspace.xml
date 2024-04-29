@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4aaf13d7-f8c4-46e8-ab9f-11989f073792" name="Changes" comment="update to run">
+    <list default="true" id="4aaf13d7-f8c4-46e8-ab9f-11989f073792" name="Changes" comment="boris review">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
@@ -69,11 +69,20 @@
       <option name="project" value="LOCAL" />
       <updated>1714420517779</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="boris review">
+      <option name="closed" value="true" />
+      <created>1714422029765</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714422029765</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update to run" />
-    <option name="LAST_COMMIT_MESSAGE" value="update to run" />
+    <MESSAGE value="boris review" />
+    <option name="LAST_COMMIT_MESSAGE" value="boris review" />
   </component>
 </project>
