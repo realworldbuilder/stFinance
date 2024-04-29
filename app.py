@@ -38,9 +38,9 @@ def add_indicators_and_find_crossovers(data):
     return data
 
 # Streamlit app layout
-st.title('Stock Data with EMA Crossover and RSI')
+st.title('5-8-13 EMA Analysis')
 ticker = st.text_input('Enter the stock ticker symbol:', 'AAPL')
-timeframe = st.selectbox('Select timeframe:', ['1d', '5d', '1mo', '3mo', '6mo', 'ytd', '1y', '5y', 'max'], index=4)
+timeframe = st.selectbox('Select chart timeframe:', ['1d', '5d', '1mo', '3mo', '6mo', 'ytd', '1y', '5y', 'max'], index=4)
 data = fetch_data(ticker, timeframe)
 
 if not data.empty:
@@ -49,7 +49,7 @@ if not data.empty:
     # Display the last 3 crossovers with directional icons
     crossovers = data[data['Crossover'] != ''].tail(3).sort_index(ascending=False)
     if not crossovers.empty:
-        st.subheader('Last 3 Crossovers')
+        st.subheader('Last 3 EMA Crossovers')
         for index, row in crossovers.iterrows():
             direction = 'Up' if 'Up' in row['Crossover'] else 'Down'
             description = row['Crossover'].replace('Up', '').replace('Down', '')
