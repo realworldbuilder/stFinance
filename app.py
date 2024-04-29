@@ -16,16 +16,26 @@ def fetch_data(ticker, period='6mo'):
 
 # Function to add EMAs, calculate RSI, and detect crossovers
 def add_indicators_and_find_crossovers(data):
+    # Calculate EMAs
     data['EMA_5'] = data['Close'].ewm(span=5, adjust=False).mean()
     data['EMA_8'] = data['Close'].ewm(span=8, adjust=False).mean()
     data['EMA_13'] = data['Close'].ewm(span=13, adjust=False).mean()
+
+    # Calculate RSI
     delta = data['Close'].diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
     rs = gain / loss
     data['RSI'] = 100 - (100 / (1 + rs))
-    return data
 
+    # Detect Crossovers
+    data['Crossover'] = ''
+    data.loc[(data['EMA_5'] > data['EMA_8']) & (data['EMA_5'].shift(1) < data['EMA_8'].shift(1)), 'Crossover'] = '5 crosses 8 Up'
+    data.loc[(data['EMA_5'] < data['EMA_8']) & (data['EMA_5'].shift(1) > data['EMA_8'].shift(1)), 'Crossover'] = '5 crosses 8 Down'
+    data.loc[(data['EMA_5'] > data['EMA_13']) & (data['EMA_5'].shift(1) < data['EMA_13'].shift(1)), 'Crossover'] = '5 crosses 13 Up'
+    data.loc[(data['EMA_5'] < data['EMA_13']) & (data['EMA_5'].shift(1) > data['EMA_13'].shift(1)), 'Crossover'] = '5 crosses 13 Down'
+
+    return data
 
 # Streamlit app layout
 st.title('Stock Data with EMA Crossover and RSI')
@@ -35,6 +45,17 @@ data = fetch_data(ticker, timeframe)
 
 if not data.empty:
     data = add_indicators_and_find_crossovers(data)
+
+    # Display the last 3 crossovers with directional icons
+    crossovers = data[data['Crossover'] != ''].tail(3).sort_index(ascending=False)
+    if not crossovers.empty:
+        st.subheader('Last 3 Crossovers')
+        for index, row in crossovers.iterrows():
+            direction = 'Up' if 'Up' in row['Crossover'] else 'Down'
+            description = row['Crossover'].replace('Up', '').replace('Down', '')
+            icon = "⬆️" if direction == 'Up' else "⬇️"
+            date = index.strftime('%Y-%m-%d')
+            st.markdown(f"**{date}**: {description} {icon}")
 
     # Synchronized charts
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.02,
