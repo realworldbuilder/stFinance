@@ -1,10 +1,9 @@
 import streamlit as st
 import yfinance as yf
-import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+import plotly.graph_objs as go
 from datetime import datetime, timedelta
 import pandas as pd
-
 
 # Function to fetch data
 def fetch_data(ticker, period='6mo'):
@@ -12,7 +11,6 @@ def fetch_data(ticker, period='6mo'):
     start_date = datetime(end_date.year, 1, 1) if period == 'ytd' else end_date - timedelta(days=180)
     data = yf.download(ticker, start=start_date, end=end_date) if period != 'max' else yf.download(ticker, period='max')
     return data
-
 
 # Function to add EMAs, calculate RSI, and detect crossovers
 def add_indicators_and_find_crossovers(data):
@@ -37,11 +35,35 @@ def add_indicators_and_find_crossovers(data):
 
     return data
 
-# Streamlit app layout
-st.title('5-8-13 EMA Analysis')
-ticker = st.text_input('Enter the stock ticker symbol:', 'AAPL')
-timeframe = st.selectbox('Select chart timeframe:', ['1d', '5d', '1mo', '3mo', '6mo', 'ytd', '1y', '5y', 'max'], index=4)
-data = fetch_data(ticker, timeframe)
+# Start of Streamlit app
+st.title('Stock Data with EMA Crossover and RSI')
+
+# Predefined list of popular stock tickers
+popular_stocks = {
+    'Apple': 'AAPL',
+    'Microsoft': 'MSFT',
+    'Google': 'GOOGL',
+    'Amazon': 'AMZN',
+    'Facebook': 'FB',
+    'Tesla': 'TSLA',
+    'Other (specify)': 'custom'
+}
+
+# Dropdown for selecting stock or entering custom ticker
+selected_stock = st.selectbox('Select a stock or enter your own:', options=list(popular_stocks.keys()))
+
+# Check if the user selects 'Other (specify)'
+if selected_stock == 'Other (specify)':
+    # Allow users to enter a custom ticker
+    ticker = st.text_input('Enter custom stock ticker:')
+    if not ticker:
+        st.error("Please enter a ticker symbol.")
+        st.stop()
+else:
+    # Use the ticker from the predefined list
+    ticker = popular_stocks[selected_stock]
+
+data = fetch_data(ticker)
 
 if not data.empty:
     data = add_indicators_and_find_crossovers(data)
