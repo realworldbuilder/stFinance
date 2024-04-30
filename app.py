@@ -38,6 +38,10 @@ def add_indicators_and_find_crossovers(data):
 # Start of Streamlit app
 st.title('5-8-13 EMA Crossover Analysis')
 
+st.markdown("""
+The 5-8-13 Exponential Moving Averages (EMAs) are a set of commonly used indicators in the trading community that help to determine momentum and identify potential trends in the market. These EMAs are especially popular among day and swing traders due to their effectiveness in spotting short-term price movements.
+""")
+
 # Predefined list of popular stock tickers
 popular_stocks = {
     'AAPL': 'AAPL',
@@ -112,8 +116,6 @@ else:
 
 # Explanatory Text
 st.markdown("""
-The 5-8-13 Exponential Moving Averages (EMAs) are a set of commonly used indicators in the trading community that help to determine momentum and identify potential trends in the market. These EMAs are especially popular among day and swing traders due to their effectiveness in spotting short-term price movements.
-
 ### What Each EMA Represents:
 - **5 EMA**: This is the fastest of the three and reacts quickly to price changes. It tracks the most recent price movements and helps identify the immediate trend.
 - **8 EMA**: Slightly slower than the 5 EMA, it helps smooth out the noise from short-term price fluctuations and provides insights into the emerging trends.
