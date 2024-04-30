@@ -40,12 +40,12 @@ st.title('5-8-13 EMA Crossovers')
 
 # Predefined list of popular stock tickers
 popular_stocks = {
-    'Apple': 'AAPL',
-    'Microsoft': 'MSFT',
-    'Google': 'GOOGL',
-    'Amazon': 'AMZN',
-    'Facebook': 'FB',
-    'Tesla': 'TSLA',
+    'AAPL': 'AAPL',
+    'MSFT': 'MSFT',
+    'GOOGL': 'GOOGL',
+    'AMZN': 'AMZN',
+    'META': 'META',
+    'TSLA': 'TSLA',
     'Other (specify)': 'custom'
 }
 
