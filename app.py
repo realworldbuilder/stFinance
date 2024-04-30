@@ -36,7 +36,7 @@ def add_indicators_and_find_crossovers(data):
     return data
 
 # Start of Streamlit app
-st.title('Stock Data with EMA Crossover and RSI')
+st.title('5-8-13 EMA Crossovers')
 
 # Predefined list of popular stock tickers
 popular_stocks = {
