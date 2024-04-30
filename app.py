@@ -36,7 +36,7 @@ def add_indicators_and_find_crossovers(data):
     return data
 
 # Start of Streamlit app
-st.title('5-8-13 EMA Crossovers')
+st.title('5-8-13 EMA Crossover Analysis')
 
 # Predefined list of popular stock tickers
 popular_stocks = {
@@ -68,10 +68,11 @@ data = fetch_data(ticker)
 if not data.empty:
     data = add_indicators_and_find_crossovers(data)
 
-    # Display the last 3 crossovers with directional icons
-    crossovers = data[data['Crossover'] != ''].tail(3).sort_index(ascending=False)
+    # Filter and sort the last 5 crossovers
+    crossovers = data[data['Crossover'] != ''].tail(5).sort_index(ascending=False)
+
     if not crossovers.empty:
-        st.subheader('Last 3 EMA Crossovers')
+        st.subheader('Last 5 Crossovers')
         for index, row in crossovers.iterrows():
             direction = 'Up' if 'Up' in row['Crossover'] else 'Down'
             description = row['Crossover'].replace('Up', '').replace('Down', '')
@@ -108,3 +109,23 @@ if not data.empty:
 
 else:
     st.error("Unable to fetch data. Please check the ticker symbol and try again.")
+
+# Explanatory Text
+st.markdown("""
+The 5-8-13 Exponential Moving Averages (EMAs) are a set of commonly used indicators in the trading community that help to determine momentum and identify potential trends in the market. These EMAs are especially popular among day and swing traders due to their effectiveness in spotting short-term price movements.
+
+### What Each EMA Represents:
+- **5 EMA**: This is the fastest of the three and reacts quickly to price changes. It tracks the most recent price movements and helps identify the immediate trend.
+- **8 EMA**: Slightly slower than the 5 EMA, it helps smooth out the noise from short-term price fluctuations and provides insights into the emerging trends.
+- **13 EMA**: This is the slowest EMA in this setup and acts as a filter for the trend, confirming its direction over a longer period.
+
+### How to Interpret Crossovers:
+- **Bullish Crossover**: Occurs when the 5 EMA crosses above both the 8 and 13 EMAs. This is typically seen as a signal to consider long positions as it may indicate the start of an uptrend.
+- **Bearish Crossover**: Occurs when the 5 EMA crosses below both the 8 and 13 EMAs. This might suggest a potential downtrend, signaling a time to consider short positions or exit long positions.
+
+### Application in Trading:
+Understanding these crossovers can significantly aid traders in making informed decisions. Typically, traders combine these signals with other indicators like RSI, MACD, or volume data to confirm the trend and improve the accuracy of their trades. It is crucial to consider market context and not rely solely on one type of analysis or indicator.
+
+This strategy is particularly useful in volatile and trending markets, where the crossovers can clearly highlight momentum shifts and potential entry/exit points.
+
+""")
